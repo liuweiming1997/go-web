@@ -1,8 +1,8 @@
 FROM golang:1.9.3-alpine3.7
 
-COPY . $GOPATH/src/database-work
+COPY . $GOPATH/src/go-web
 
-WORKDIR $GOPATH/src/database-work/server
+WORKDIR $GOPATH/src/go-web/server
 
 RUN go build -o main main.go
 
