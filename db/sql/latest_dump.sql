@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
 --
--- Host: 95.163.202.160    Database: homework
+-- Host: 127.0.0.1    Database: homework
 -- ------------------------------------------------------
 -- Server version	5.7.21
 
@@ -14,6 +14,33 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `demo`
+--
+
+DROP TABLE IF EXISTS `demo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `demo` (
+  `auto_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+  `user` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `money` double(255,2) DEFAULT NULL,
+  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`auto_id`),
+  KEY `user` (`user`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `demo`
+--
+
+LOCK TABLES `demo` WRITE;
+/*!40000 ALTER TABLE `demo` DISABLE KEYS */;
+INSERT INTO `demo` VALUES (1,'vimi',52.20,'2018-03-24 16:21:58'),(2,'vimi',23.00,'2018-03-24 08:22:42'),(3,'vimi',23.00,'2018-03-24 08:27:47'),(4,'jack',43.20,'2018-03-24 08:28:33'),(5,'dandelion',43.20,'2018-03-24 13:26:32'),(6,'vimi',44.50,'2018-03-24 13:28:33'),(7,'vimi',77.00,'2018-03-24 13:30:16');
+/*!40000 ALTER TABLE `demo` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -24,4 +51,4 @@
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-24 10:23:34
+-- Dump completed on 2018-03-24 21:32:31
