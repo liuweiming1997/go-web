@@ -11,3 +11,6 @@ restore:
 
 deploy:
 	@./tools/deploy.sh deploy
+
+localtest:
+	@./tools/localtest.sh localtest
