@@ -39,6 +39,10 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - DC_DB_HOST=${DC_DB_HOST}
       - DC_DB_SSL_MODE=${DC_DB_SSL_MODE}
+    volumes:
+      # abs dirctory cause this use here .env, no $GOPATH
+      - ../logs:/go/src/github.com/sundayfun/go-web/logs
+      # - ../logs:$GOPATH/src/github.com/sundayfun/go-web/logs
     depends_on:
       - db
     links:
