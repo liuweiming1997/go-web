@@ -23,3 +23,6 @@ glide.lock
 
 build/
 vendor/
+
+#logs
+log.txt

@@ -16,6 +16,10 @@ function dbrestore() {
 	mysql -h $DC_DB_HOST -uroot -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < ./db/sql/latest_dump.sql
 }
 
+function now() {
+	echo pwd;
+}
+
 case "$1" in
 	deploy) 
 		deploy
@@ -24,6 +28,9 @@ case "$1" in
 	dbrestore)
         dbrestore
         ;;
+     now)
+		now
+		;;
     *)
         echo $"must choose deploy | dbrestore"
         exit 1

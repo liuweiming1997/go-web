@@ -29,7 +29,7 @@ CREATE TABLE `demo` (
   `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`auto_id`),
   KEY `user` (`user`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `demo` (
 
 LOCK TABLES `demo` WRITE;
 /*!40000 ALTER TABLE `demo` DISABLE KEYS */;
-INSERT INTO `demo` VALUES (1,'vimi',52.20,'2018-03-24 16:21:58'),(2,'vimi',23.00,'2018-03-24 08:22:42'),(3,'vimi',23.00,'2018-03-24 08:27:47'),(4,'jack',43.20,'2018-03-24 08:28:33'),(5,'dandelion',43.20,'2018-03-24 13:26:32'),(6,'vimi',44.50,'2018-03-24 13:28:33'),(7,'vimi',77.00,'2018-03-24 13:30:16');
+INSERT INTO `demo` VALUES (1,'vimi',52.20,'2018-03-24 16:21:58'),(2,'vimi',23.00,'2018-03-24 08:22:42'),(3,'vimi',23.00,'2018-03-24 08:27:47'),(4,'jack',43.20,'2018-03-24 08:28:33'),(5,'dandelion',43.20,'2018-03-24 13:26:32'),(6,'vimi',44.50,'2018-03-24 13:28:33'),(7,'vimi',77.00,'2018-03-24 13:30:16'),(8,'vimi',44.00,'2018-03-24 13:33:33'),(9,'vimi',34.30,'2018-03-24 13:43:27'),(10,'vimi',33.00,'2018-03-24 13:49:30'),(11,'vimi',43.20,'2018-03-24 14:01:17'),(14,'vimi',45.22,'2018-03-24 16:52:49');
 /*!40000 ALTER TABLE `demo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-24 21:32:31
+-- Dump completed on 2018-03-25  9:25:22
