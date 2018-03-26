@@ -8,14 +8,9 @@
 </head>
 <body>
 
-<!-- <form action="/login" method="post">
-	user:<input type="text" name="user">
-	money:<input type="text" name="money">
-	<input type="submit" value="登录">
-</form> -->
 
 <div>
-<form name = "myform"  onsubmit = "validateForm()" method = "post" action ="/login" >
+<form name = "myform" method = "post">
 <table align="center">
  <tr><td><label>&nbsp;&nbsp;user：</label></td><td><input type = "text" name = "user" class="form-control"></td></tr>
  <tr><td><label>money：</td></label><td><input type = "text" name = "money" class="form-control"></td></tr>
@@ -26,6 +21,11 @@
   </table>
   </form>
 </div>
-
+	<form>
+		<table text-algin:center>
+			<p><strong><a href="/querysumforcompany">查询公司报销金额</a></strong></p><br>
+			<strong><a href="/querysumforself">查询个人支出金额</a></strong>
+		</table>
+	</form>
 </body>
 </html>

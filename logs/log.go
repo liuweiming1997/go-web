@@ -2,7 +2,6 @@ package logs
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"time"
@@ -28,7 +27,7 @@ func init() {
 }
 
 func LogToFile(str string) {
-	fmt.Println(str)
+	// fmt.Println(str)
 	_, err := FileWriter.WriteString(time.Now().String()[0:19] + " : " + str)
 	if len(str) > 0 && str[len(str)-1] != '\n' || len(str) == 0 {
 		FileWriter.WriteString("\n")
