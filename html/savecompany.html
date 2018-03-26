@@ -7,12 +7,11 @@
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-
 <div>
 <form name = "myform" method = "post">
 <table align="center">
- <tr><td><label>&nbsp;&nbsp;user：</label></td><td><input type = "text" name = "user" class="form-control"></td></tr>
+ <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> 
+ <tr><td><label>&nbsp;&nbsp;&nbsp;&nbsp;user：</label></td><td><input type = "text" name = "user" class="form-control"></td></tr>
  <tr><td><label>money：</td></label><td><input type = "text" name = "money" class="form-control"></td></tr>
  <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><input type = "submit" value = "submit" class="btn btn-default"> 
@@ -21,11 +20,13 @@
   </table>
   </form>
 </div>
+	<br>
 	<form>
-		<table text-algin:center>
-			<p><strong><a href="/querysumforcompany">查询公司报销金额</a></strong></p><br>
-			<strong><a href="/querysumforself">查询个人支出金额</a></strong>
-		</table>
+		<div style="text-align: center;">
+			<strong><a href="/querysumforcompany">查询公司报销金额</a></strong><br><br>
+			<strong><a href="/querysumforself">查询个人支出金额</a></strong><br>
+		</div>
 	</form>
+<input type="date" id="datebegin" value={{.}} >
 </body>
 </html>

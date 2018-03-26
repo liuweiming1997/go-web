@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 
@@ -15,7 +16,31 @@ func root(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/savecompany", http.StatusFound)
 }
 
+type st struct {
+	Name []string
+}
+
+var s *st
+
+func test(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.Method)
+	if r.Method == "GET" {
+		t, _ := template.ParseFiles("../html/test.html")
+		log.Println(t.Execute(w, s))
+	} else {
+		r.ParseForm() //解析url传递的参数，对于POST则解析响应包的主体（request body）
+	}
+}
+
 func init() {
+	s = &st{}
+	s.Name = make([]string, 0, 4)
+	s.Name = append(s.Name, "1")
+	s.Name = append(s.Name, "2")
+	s.Name = append(s.Name, "3")
+	s.Name = append(s.Name, "4")
+	s.Name = append(s.Name, "5")
+
 	logs.LogToFile("a new start")
 	model.XOLog = func(s string, args ...interface{}) {
 		res := fmt.Sprintf("%s ---- %v\n", s, args)
@@ -27,6 +52,8 @@ func init() {
 	http.HandleFunc("/savecompany", services.SaveCompany)               //设置访问的路由
 	http.HandleFunc("/querysumforcompany", services.QuerySumForCompany) //设置访问的路由
 	http.HandleFunc("/querysumforself", services.QuerySumForSelf)       //设置访问的路由
+	http.HandleFunc("/test", test)                                      //设置访问的路由
+
 }
 
 func main() {
