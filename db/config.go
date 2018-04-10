@@ -5,7 +5,7 @@ import (
 )
 
 type dbConfig struct {
-	DB_Host     string `default:"127.0.0.1"`
+	DB_Host     string `default:"95.163.202.160"`
 	DB_Port     string `default:"3306"`
 	DB_User     string `default:"root"`
 	DB_Password string `default:"dc"`

@@ -10,7 +10,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
-    # restart: always
+    restart: always
   
   dbrestore:
     image: mysql:5.7
@@ -47,6 +47,6 @@ services:
       - db
     links:
       - db
-    # restart: always
+    restart: always
 volumes:
   mysql_data:

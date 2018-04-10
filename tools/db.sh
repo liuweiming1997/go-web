@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DBUSER=root
-DBHOST=127.0.0.1
+DBHOST=95.163.202.160
 DBNAME=homework
 DBPASSWORD=dc
 
