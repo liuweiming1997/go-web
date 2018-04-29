@@ -1,11 +1,12 @@
 #!/bin/bash
 
+#39.108.100.86
 server_address=95.163.202.160
 
 function deploy() {
 	#  rsync的desc会自动创建一个目录，所以这样就是/root/daycam-server
 	echo "maybe a little bit slow because will push this file to your-server"
-	rsync -avz ../go-web root@${server_address}:/root
+	rsync -avz --delete ../go-web root@${server_address}:/root
 	ssh root@${server_address} "cd go-web/docker; 
                                    docker-compose up --build -d db; 
                                    docker-compose up --build -d dbrestore; 

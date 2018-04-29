@@ -39,6 +39,9 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - DC_DB_HOST=${DC_DB_HOST}
       - DC_DB_SSL_MODE=${DC_DB_SSL_MODE}
+    # args:
+    #   - http_proxy=${PROXY} # export PROXY=http://zz:xx if need proxy to build
+    #   - https_proxy=${PROXY}
     volumes:
       # abs dirctory cause this use here .env, no $GOPATH
       - ../logs:/go/src/github.com/sundayfun/go-web/logs

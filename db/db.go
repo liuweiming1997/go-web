@@ -19,7 +19,6 @@ func init() {
 		conf.DB_Host,
 		conf.DB_Port,
 		conf.DB_Name)
-	fmt.Println(source)
 	db, err := sqlx.Connect("mysql", source)
 	logs.CheckErr(err)
 	GlobalDB = db
