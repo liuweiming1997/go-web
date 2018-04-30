@@ -3,7 +3,7 @@ services:
   db:
     image: mysql:5.7
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_data_test:/var/lib/mysql
     ports:
        - "3306:3306"
     environment:
@@ -16,8 +16,8 @@ services:
     image: mysql:5.7
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - DC_DB_HOST=${DC_DB_HOST}
-      - DC_DB_SSL_MODE=${DC_DB_SSL_MODE}
+      - VIMI_DB_HOST=${VIMI_DB_HOST}
+      - VIMI_DB_SSL_MODE=${VIMI_DB_SSL_MODE}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - ../db:/db
@@ -37,8 +37,8 @@ services:
       - "9090:9090"
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - DC_DB_HOST=${DC_DB_HOST}
-      - DC_DB_SSL_MODE=${DC_DB_SSL_MODE}
+      - VIMI_DB_HOST=${VIMI_DB_HOST}
+      - VIMI_DB_SSL_MODE=${VIMI_DB_SSL_MODE}
     # args:
     #   - http_proxy=${PROXY} # export PROXY=http://zz:xx if need proxy to build
     #   - https_proxy=${PROXY}
@@ -52,4 +52,4 @@ services:
       - db
     restart: always
 volumes:
-  mysql_data:
+  mysql_data_test:

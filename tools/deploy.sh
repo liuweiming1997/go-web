@@ -14,7 +14,7 @@ function deploy() {
 }
 
 function dbrestore() {
-	mysql -h $DC_DB_HOST -uroot -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < ./db/sql/latest_dump.sql
+	mysql -h $VIMI_DB_HOST -uroot -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < ./db/sql/latest_dump.sql
 }
 
 function now() {

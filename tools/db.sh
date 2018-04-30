@@ -3,7 +3,7 @@
 DBUSER=root
 DBHOST=95.163.202.160
 DBNAME=homework
-DBPASSWORD=dc
+DBPASSWORD=vimi
 
 #get remote database sql to local
 function dump() {
