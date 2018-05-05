@@ -30,6 +30,7 @@ func ImageFromImageUrl(imageUrl string, fileName string) error {
 	// if _, ok := same[imageUrl]; ok {
 	// 	return fmt.Errorf("exist")
 	// }
+
 	same[imageUrl] = true
 	resp, err := http.Get(imageUrl)
 	defer resp.Body.Close()
