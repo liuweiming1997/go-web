@@ -1,12 +1,12 @@
 package push
 
 import (
-	"github.com/logrus"
-	"gopkg.in/telegram-bot-api.v4"
+	"github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/sirupsen/logrus"
 )
 
 const (
-	VimiBotKey          = "516690928:AAGrWIVWj3LuUMicwFaajnyt4Z0j-CP6X7U"
+	VimiBotKey          = ""
 	TelegramChatIDGroup = -264517585
 	TelegramChatIDVimi  = 505481672
 )
@@ -34,4 +34,26 @@ func PushMessageToTelegram(b []byte) error {
 	}
 	logrus.Debug(res)
 	return nil
+}
+
+func StateChat() {
+	u := tgbotapi.NewUpdate(0)
+	u.Timeout = 60
+
+	updates, err := vimiBot.GetUpdatesChan(u)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	for update := range updates {
+		if update.Message == nil {
+			continue
+		}
+
+		logrus.Infof("[%s] %s", update.Message.From.UserName, update.Message.Text)
+
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+		msg.ReplyToMessageID = update.Message.MessageID
+
+		vimiBot.Send(msg)
+	}
 }

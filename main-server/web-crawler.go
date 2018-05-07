@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/sirupsen/logrus"
+	"github.com/sundayfun/go-web/push"
 	"github.com/sundayfun/go-web/util/file"
 	"github.com/sundayfun/go-web/util/filter"
 )
@@ -95,12 +96,13 @@ func done() {
 }
 
 func main() {
-	err := file.CreateDirIfNotExit(SavePicturePath)
-	if err != nil {
-		logrus.Error(err)
+	push.StateChat()
+	// err := file.CreateDirIfNotExit(SavePicturePath)
+	// if err != nil {
+	// 	logrus.Fatal(err)
 
-	}
-	done()
+	// }
+	// done()
 	// ImageFromImageUrl("http://img5.imgtn.bdimg.com/it/u=1011441765,2690175992&fm=27&gp=0.jpg", "vimi")
 	return
 }

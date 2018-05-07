@@ -15,11 +15,11 @@ WORKDIR $GOPATH/src/github.com/sundayfun/go-web
 # RUN glide up
 # RUN glide install -v
 
-WORKDIR $GOPATH/src/github.com/sundayfun/go-web/server
+WORKDIR $GOPATH/src/github.com/sundayfun/go-web/main-server
 
-RUN go build -o main main.go
+RUN go build -o web-crawler web-crawler.go 
 
-ENTRYPOINT ["./main"]
+ENTRYPOINT ["./web-crawler"]
 
 # must use ./main
 
