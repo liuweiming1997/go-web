@@ -31,15 +31,8 @@ func test(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm() //解析url传递的参数，对于POST则解析响应包的主体（request body）
 	}
 }
-
 func init() {
-	s = &st{}
-	s.Name = make([]string, 0, 4)
-	s.Name = append(s.Name, "1")
-	s.Name = append(s.Name, "2")
-	s.Name = append(s.Name, "3")
-	s.Name = append(s.Name, "4")
-	s.Name = append(s.Name, "5")
+	fmt.Println("begin")
 
 	logs.LogToFile("a new start")
 	model.XOLog = func(s string, args ...interface{}) {

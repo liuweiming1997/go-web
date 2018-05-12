@@ -221,7 +221,8 @@ import "regexp"
 
 //  to suit "." must use \.
 var (
+	// `<sdf><title>谈谈我开发过的几套语音通信解决方案 - davidtym - 博客园</title>sadfsadf`
 	// ReImageURL = regexp.MustCompile(`http://(\w|\d|=|&|:|/|\.|,|-)*?(.jpg|.jpeg)`)
-	ReImageURL = regexp.MustCompile(`https://(\w|[[:punct:]])*?(.jpg|.jpeg)`)
-	// ReImageName = regexp.MustCompile(``)
+	ReHtml  = regexp.MustCompile(`(https|http)://(\w|[[:punct:]])*?(\.html)`)
+	ReTitle = regexp.MustCompile(`<title>[\d|\D]*?(</title>)`)
 )

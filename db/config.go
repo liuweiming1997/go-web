@@ -1,9 +1,8 @@
 package db
 
 import (
-	"fmt"
-
 	"github.com/kelseyhightower/envconfig"
+	"github.com/sirupsen/logrus"
 )
 
 type dbConfig struct {
@@ -17,6 +16,6 @@ type dbConfig struct {
 func getDBConfig() (*dbConfig, error) {
 	var conf dbConfig
 	err := envconfig.Process("VIMI", &conf)
-	fmt.Println(conf)
+	logrus.Info(conf)
 	return &conf, err
 }

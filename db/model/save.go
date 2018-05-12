@@ -4,7 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/sundayfun/go-web/db"
-	"github.com/sundayfun/go-web/logs"
+	"github.com/sundayfun/go-web/util"
 )
 
 func SaveCompany(d *Company) {
@@ -26,11 +26,11 @@ func SaveCompany(d *Company) {
 	// run query
 	XOLog(sqlstr, d.User, d.Money)
 	res, err := db.GlobalDB.Exec(sqlstr, d.User, d.Money)
-	logs.CheckErr(err)
+	util.CheckErr(err)
 
 	// retrieve id
 	id, err := res.LastInsertId()
-	logs.CheckErr(err)
+	util.CheckErr(err)
 
 	// set primary key and existence
 	d.AutoID = int(id)
@@ -38,7 +38,7 @@ func SaveCompany(d *Company) {
 	d._deleted = false
 	// get the time
 	d, err = CompanyByAutoID(db.GlobalDB, d.AutoID)
-	logs.CheckErr(err)
+	util.CheckErr(err)
 }
 
 func SaveSelf(s *Self) {
@@ -56,11 +56,11 @@ func SaveSelf(s *Self) {
 	// run query
 	XOLog(sqlstr, s.User, s.Money, s.Time)
 	res, err := db.GlobalDB.Exec(sqlstr, s.User, s.Money)
-	logs.CheckErr(err)
+	util.CheckErr(err)
 
 	// retrieve id
 	id, err := res.LastInsertId()
-	logs.CheckErr(err)
+	util.CheckErr(err)
 
 	// set primary key and existence
 	s.AutoID = int(id)
@@ -68,7 +68,7 @@ func SaveSelf(s *Self) {
 	s._deleted = false
 
 	s, err = SelfByAutoID(db.GlobalDB, s.AutoID)
-	logs.CheckErr(err)
+	util.CheckErr(err)
 }
 
 func SumCompanyByUser(username string) (res float64, err error) {

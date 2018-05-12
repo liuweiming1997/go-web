@@ -3,8 +3,8 @@
 # local test here
 function localtest() {
 	echo "local debug begin"
-	cd ./server
-	go run ./main.go
+	cd ./main-server
+	go run ./web-crawler.go
 }
 
 case "$1" in
