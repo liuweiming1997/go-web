@@ -14,3 +14,9 @@ deploy:
 
 localtest:
 	@./tools/localtest.sh localtest
+
+getRemote:
+	@./tools/util.sh getRemote
+
+stopRemote:
+	@./tools/util.sh stopRemote
