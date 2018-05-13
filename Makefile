@@ -20,3 +20,6 @@ getRemote:
 
 stopRemote:
 	@./tools/util.sh stopRemote
+
+logRemote:
+	@./tools/util.sh logRemote

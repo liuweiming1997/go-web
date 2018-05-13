@@ -11,6 +11,11 @@ function stopRemote() {
 	ssh root@${server_address} "docker stop docker_server_1"
 }
 
+function logRemote() {
+	echo "docker logs -f docker_server_1......"
+	ssh root@${server_address} "docker logs -f docker_server_1"
+}
+
 case "$1" in
 	getRemote) 
 		getRemote
@@ -19,7 +24,11 @@ case "$1" in
 	stopRemote)
 		stopRemote
 		;;
-    *)
+
+	logRemote)
+		logRemote
+		;;
+	*)
         echo $"must choose getRemote | stopRemote"
         exit 1
 esac
