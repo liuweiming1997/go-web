@@ -2,7 +2,6 @@ package telegram
 
 import (
 	"fmt"
-	"regexp"
 	"runtime"
 	"sync"
 	"time"
@@ -20,27 +19,26 @@ func init() {
 	logrus.Infof("the number of cpu: %d", runtime.NumCPU())
 	// runtime.GOMAXPROCS(1000)
 	GlobalTelegramBot = getTelegramBot()
-	GlobalTelegramBot.startChat()
-	GlobalTelegramBot.startSpider("https://www.cnblogs.com/", filter.ReHtml, 30, TelegramChatIDGroup)
-	GlobalTelegramBot.startNotification()
 }
 
-func (s *telegramBot) startNotification() {
+func (s *telegramBot) StartNotification() {
 	logrus.Info("start notification consumer")
+	// go func() {
 	for {
-		chatID := <-s.chatID
-		chatMessage := <-s.chatMessage
-
-		msg := tgbotapi.NewMessage(chatID, chatMessage)
+		temp := <-GlobalTelegramBot.chat
+		// chatID := <-GlobalTelegramBot.chatID
+		// chatMessage := <-GlobalTelegramBot.chatMessage
+		msg := tgbotapi.NewMessage(temp.chatID, temp.chatMessage)
 
 		_, err := s.bot.Send(msg)
 		if err != nil {
 			logrus.Error(err)
 		}
 	}
+	// }()
 }
 
-func (s *telegramBot) startSpider(url string, re *regexp.Regexp, updateTimePerMinute int64, chatID int64) {
+func (s *telegramBot) StartSpider(url string, WannerFromHtml func(string) string, updateTimePerMinute int64, chatID int64) {
 	//TODO: same url check use redis
 	logrus.Info("start spider consumer")
 	ticker := time.NewTicker(time.Duration(updateTimePerMinute) * time.Minute)
@@ -53,7 +51,7 @@ func (s *telegramBot) startSpider(url string, re *regexp.Regexp, updateTimePerMi
 				continue
 			}
 			chatMessage := t.String()[0:19] + "\n"
-			chatMessage += WannerFromRegexp(re, html)
+			chatMessage += WannerFromHtml(html)
 			if len(chatMessage) == 20 {
 				continue
 			}
@@ -62,7 +60,7 @@ func (s *telegramBot) startSpider(url string, re *regexp.Regexp, updateTimePerMi
 	}()
 }
 
-func (s *telegramBot) startChat() {
+func (s *telegramBot) StartChat() {
 	logrus.Info("start chat consumer")
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
@@ -73,7 +71,6 @@ func (s *telegramBot) startChat() {
 	}
 
 	go func() {
-
 		for val := range updates {
 			if val.Message == nil {
 				continue

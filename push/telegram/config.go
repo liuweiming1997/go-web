@@ -11,11 +11,17 @@ const (
 	TelegramChatIDVimi  = 505481672
 )
 
+type Message struct {
+	chatID      int64
+	chatMessage string
+}
+
 type telegramBot struct {
-	bot         *tgbotapi.BotAPI `default: nil`
-	token       string           `default: nil`
-	chatID      chan int64       `default: nil`
-	chatMessage chan string      `default: nil`
+	bot   *tgbotapi.BotAPI `default: nil`
+	token string           `default: nil`
+	chat  chan *Message    `default: nil`
+	// chatID      chan int64  `default: nil`
+	// chatMessage chan string `default: nil`
 }
 
 type tokenStruct struct {
@@ -40,9 +46,10 @@ func getTelegramBot() *telegramBot {
 	logrus.Infof("Authorized on account %s", _bot.Self.UserName)
 
 	return &telegramBot{
-		bot:         _bot,
-		token:       _token,
-		chatID:      make(chan int64, 100),
-		chatMessage: make(chan string, 100),
+		bot:   _bot,
+		token: _token,
+		chat:  make(chan *Message, 100),
+		// chatID:      make(chan int64, 100),
+		// chatMessage: make(chan string, 100),
 	}
 }

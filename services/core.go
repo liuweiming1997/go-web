@@ -7,12 +7,16 @@ import (
 	"regexp"
 	"strconv"
 
+	"github.com/sirupsen/logrus"
 	"github.com/sundayfun/go-web/util/filter"
 )
 
-func TitleFromUrl(url string) string {
-	html, _ := HtmlFromUrl(url)
-	res := filter.ReTitle.FindAllString(html, -1)
+func TitleFromUrl(url string, re *regexp.Regexp) string {
+	html, err := HtmlFromUrl(url)
+	if err != nil {
+		return ""
+	}
+	res := re.FindAllString(html, -1)
 	if len(res) == 0 {
 		return ""
 	}
@@ -46,7 +50,11 @@ func WannerFromRegexp(re *regexp.Regexp, text string) string {
 			continue
 		}
 		mp[val] = true
-		title := TitleFromUrl(val)
+		logrus.Debug(val)
+		title := TitleFromUrl(val, filter.ReTitle)
+		if title == "" {
+			continue
+		}
 		message += title + "\n"
 		message += strconv.Itoa(id) + " "
 		message += val + "\n"
@@ -54,4 +62,8 @@ func WannerFromRegexp(re *regexp.Regexp, text string) string {
 		id++
 	}
 	return message
+}
+
+func TestFunc(text string) string {
+	return text
 }

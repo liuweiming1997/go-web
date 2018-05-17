@@ -1,6 +1,9 @@
 package filter
 
-import "regexp"
+import (
+	"fmt"
+	"regexp"
+)
 
 // /http://www.cnblogs.com/golove/p/3269099.html
 
@@ -221,8 +224,48 @@ import "regexp"
 
 //  to suit "." must use \.
 var (
-	// `<sdf><title>谈谈我开发过的几套语音通信解决方案 - davidtym - 博客园</title>sadfsadf`
-	// ReImageURL = regexp.MustCompile(`http://(\w|\d|=|&|:|/|\.|,|-)*?(.jpg|.jpeg)`)
+	//(http://)(.)*?(baidu)(.)*?(\.com)
+	//(http://)[\d|\D]*?(baidu)[\d|\D]*?(.com)  wrong
+	ReTest = regexp.MustCompile(`(http://|https://)(.)*?((?i)test)(.)*?(VIMI)`)
+
+	//*********************************************************//
 	ReHtml  = regexp.MustCompile(`(https|http)://(\w|[[:punct:]])*?(\.html)`)
 	ReTitle = regexp.MustCompile(`<title>[\d|\D]*?(</title>)`)
 )
+
+type VimiRegexp struct {
+	BeginWith   []string
+	MustContain []string
+	EndWith     []string
+}
+
+func (s *VimiRegexp) GetRegexp() *regexp.Regexp {
+	str := ""
+	str += s.SliceToString(s.BeginWith)
+	str += "(.)*?"
+	str += s.SliceToString(s.MustContain)
+	str += "(.)*?"
+	str += s.SliceToString(s.EndWith)
+	fmt.Println(str)
+	return regexp.MustCompile(str)
+}
+
+func (s *VimiRegexp) SliceToString(args []string) string {
+	ans := "((?i)" // ignore capital or lower case
+	for j, str := range args {
+		for i := 0; i < len(str); i++ {
+			switch str[i] {
+			case '\\', '^', '$', '.', '*', '+', '?', '{', '}', '(', ')', '[', ']', '|':
+				ans += `\`
+				ans += string(str[i])
+			default:
+				ans += string(str[i])
+			}
+		}
+		if j != len(args)-1 {
+			ans += "|"
+		}
+	}
+	ans += ")"
+	return ans
+}
