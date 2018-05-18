@@ -5,14 +5,14 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"github.com/sundayfun/go-web/util"
+	"github.com/sundayfun/go-web/tool"
 )
 
 var GlobalDB *sqlx.DB
 
 func init() {
 	conf, err := getDBConfig()
-	util.CheckErr(err)
+	tool.CheckErr(err)
 
 	source := fmt.Sprintf("%s:%s@(%s:%s)/%s?parseTime=true&sql_mode=ansi",
 		conf.DB_User,
@@ -21,6 +21,6 @@ func init() {
 		conf.DB_Port,
 		conf.DB_Name)
 	db, err := sqlx.Connect("mysql", source)
-	util.CheckErr(err)
+	tool.CheckErr(err)
 	GlobalDB = db
 }

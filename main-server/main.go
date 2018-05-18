@@ -39,7 +39,7 @@ package main
 // 		res := fmt.Sprintf("%s ---- %v\n", s, args)
 // 		logs.LogToFile(res)
 // 	}
-// 	fmt.Println(util.Command("pwd"))
+// 	fmt.Println(tool.Command("pwd"))
 
 // 	http.HandleFunc("/", root)                                          //设置访问的路由
 // 	http.HandleFunc("/savecompany", services.SaveCompany)               //设置访问的路由

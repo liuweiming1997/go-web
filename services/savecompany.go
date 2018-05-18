@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/sundayfun/go-web/db/model"
-	"github.com/sundayfun/go-web/util"
+	"github.com/sundayfun/go-web/tool"
 )
 
 type Err struct {
@@ -18,7 +18,7 @@ func SaveCompany(w http.ResponseWriter, r *http.Request) {
 	// fmt.Println("method:", r.Method) //获取请求的方法
 	if r.Method == "GET" {
 		t, _ := template.ParseFiles("../html/savecompany.html")
-		t.Execute(w, util.NowDate())
+		t.Execute(w, tool.NowDate())
 	} else {
 		r.ParseForm() //解析url传递的参数，对于POST则解析响应包的主体（request body）
 		money, err := strconv.ParseFloat(r.Form["money"][0], 64)
