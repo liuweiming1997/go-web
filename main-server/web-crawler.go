@@ -1,17 +1,20 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
 	. "github.com/sundayfun/go-web/push/telegram"
+	"github.com/sundayfun/go-web/redis"
 	"github.com/sundayfun/go-web/services"
-	. "github.com/sundayfun/go-web/util/filter"
+	. "github.com/sundayfun/go-web/tool/filter"
 )
 
 var mp = make(map[string]bool)
 
 func main() {
+	fmt.Println(redis.GlobalRedis)
 	searchJianShu("https://www.jianshu.com/c/0f5cb8eb7927", 60)
 	searchJianShu("https://www.jianshu.com/c/3e489dead7a7", 75)
 	searchJianShu("https://www.jianshu.com/c/20f7f4031550?utm_medium=index-collections&utm_source=desktop", 30)

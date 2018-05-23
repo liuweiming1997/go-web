@@ -9,7 +9,7 @@ import (
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/sirupsen/logrus"
 	. "github.com/sundayfun/go-web/services"
-	"github.com/sundayfun/go-web/util/filter"
+	"github.com/sundayfun/go-web/tool/filter"
 )
 
 var GlobalTelegramBot *telegramBot

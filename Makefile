@@ -1,25 +1,25 @@
 .PHONY: xo
 
 xo:
-	@./tools/generate-xo-models.sh
+	@./shell/generate-xo-models.sh
 
 dump:
-	@./tools/db.sh dump
+	@./shell/db.sh dump
 
 restore:
-	@./tools/db.sh restore
+	@./shell/db.sh restore
 
 deploy:
-	@./tools/deploy.sh deploy
+	@./shell/deploy.sh deploy
 
 localtest:
-	@./tools/localtest.sh localtest
+	@./shell/localtest.sh localtest
 
 getRemote:
-	@./tools/util.sh getRemote
+	@./shell/util.sh getRemote
 
 stopRemote:
-	@./tools/util.sh stopRemote
+	@./shell/util.sh stopRemote
 
 logRemote:
-	@./tools/util.sh logRemote
+	@./shell/util.sh logRemote
