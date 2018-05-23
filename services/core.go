@@ -8,7 +8,7 @@ import (
 	"strconv"
 
 	"github.com/sirupsen/logrus"
-	"github.com/sundayfun/go-web/util/filter"
+	"github.com/sundayfun/go-web/tool/filter"
 )
 
 func TitleFromUrl(url string, re *regexp.Regexp) string {
@@ -31,6 +31,10 @@ func HtmlFromUrl(url string) (string, error) {
 		return "", err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return "", fmt.Errorf("statusCode wanner 200 but have %d", resp.StatusCode)
+	}
 
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
