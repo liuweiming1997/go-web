@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -12,6 +13,15 @@ import (
 )
 
 func main() {
+
+	//TOTEST checkout redis
+	res := redis.Get([]byte("you wanner string"))
+	if res == nil {
+		fmt.Println("redis test : nil")
+	} else {
+		fmt.Printf("redis test : %s\n", string(res))
+	}
+
 	searchJianShu("https://www.jianshu.com/c/0f5cb8eb7927", 60)
 	searchJianShu("https://www.jianshu.com/c/3e489dead7a7", 75)
 	searchJianShu("https://www.jianshu.com/c/20f7f4031550?utm_medium=index-collections&utm_source=desktop", 30)

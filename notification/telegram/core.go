@@ -6,7 +6,9 @@ import (
 
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/sirupsen/logrus"
+	"github.com/sundayfun/go-web/redis"
 	. "github.com/sundayfun/go-web/services"
+	"github.com/sundayfun/go-web/tool"
 	"github.com/sundayfun/go-web/tool/filter"
 )
 
@@ -60,6 +62,10 @@ func (s *telegramBot) StartChat() {
 			if val.Message == nil {
 				continue
 			}
+
+			//TOTEST: I save it in redis and check it
+			redis.Set([]byte(val.Message.Text), []byte(tool.UrlKey))
+
 			html, err := HtmlFromUrl(val.Message.Text)
 			if err != nil {
 				PushMessageToTelegram(val.Message.Chat.ID, "it seem that is not a website")
