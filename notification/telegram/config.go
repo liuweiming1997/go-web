@@ -1,10 +1,22 @@
 package telegram
 
 import (
+	"fmt"
+	"os"
+	"runtime"
+
 	"github.com/go-telegram-bot-api/telegram-bot-api"
-	"github.com/kelseyhightower/envconfig"
 	"github.com/sirupsen/logrus"
+	"github.com/sundayfun/go-web/tool"
 )
+
+var GlobalTelegramBot *telegramBot
+
+func init() {
+	logrus.Infof("the number of cpu: %d", runtime.NumCPU())
+	// runtime.GOMAXPROCS(1000)
+	GlobalTelegramBot = getTelegramBot()
+}
 
 const (
 	TelegramChatIDGroup = -264517585
@@ -24,30 +36,23 @@ type telegramBot struct {
 	// chatMessage chan string `default: nil`
 }
 
-type tokenStruct struct {
-	Token string `default:""`
-}
-
 func getTelegramBot() *telegramBot {
-	var s tokenStruct
-	err := envconfig.Process("Telegram_Token", &s)
+	token := os.Getenv(tool.TelegramToken)
+	if token == "" {
+		fmt.Printf("why %s is empty?\n", tool.TelegramToken)
+	}
+
+	logrus.Info("Telegram_Token:", token)
+
+	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
 		logrus.Fatal(err)
 	}
-
-	_token := s.Token
-
-	logrus.Info("Telegram_Token:", _token)
-
-	_bot, err := tgbotapi.NewBotAPI(_token)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Infof("Authorized on account %s", _bot.Self.UserName)
+	logrus.Infof("Authorized on account %s", bot.Self.UserName)
 
 	return &telegramBot{
-		bot:   _bot,
-		token: _token,
+		bot:   bot,
+		token: token,
 		chat:  make(chan *Message, 100),
 		// chatID:      make(chan int64, 100),
 		// chatMessage: make(chan string, 100),

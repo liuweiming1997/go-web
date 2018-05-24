@@ -1,7 +1,6 @@
 package filter
 
 import (
-	"fmt"
 	"regexp"
 )
 
@@ -246,7 +245,10 @@ func (s *VimiRegexp) GetRegexp() *regexp.Regexp {
 	str += s.SliceToString(s.MustContain)
 	str += "(.)*?"
 	str += s.SliceToString(s.EndWith)
-	fmt.Println(str)
+
+	// if need debug
+	// fmt.Println(str)
+
 	return regexp.MustCompile(str)
 }
 

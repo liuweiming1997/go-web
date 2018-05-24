@@ -8,6 +8,8 @@ import (
 	"strconv"
 
 	"github.com/sirupsen/logrus"
+	"github.com/sundayfun/go-web/redis"
+	"github.com/sundayfun/go-web/tool"
 	"github.com/sundayfun/go-web/tool/filter"
 )
 
@@ -43,17 +45,15 @@ func HtmlFromUrl(url string) (string, error) {
 	return string(data), nil
 }
 
-var mp = make(map[string]bool)
-
 func WannerFromRegexp(re *regexp.Regexp, text string) string {
 	message := ""
 	str := re.FindAllString(text, -1)
 	id := 1
 	for _, val := range str {
-		if mp[val] {
+		if redis.Exist([]byte(val)) {
 			continue
 		}
-		mp[val] = true
+		redis.Set([]byte(val), []byte(tool.UrlKey))
 		logrus.Debug(val)
 		title := TitleFromUrl(val, filter.ReTitle)
 		if title == "" {

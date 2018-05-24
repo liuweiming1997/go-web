@@ -2,8 +2,6 @@ package telegram
 
 import (
 	"fmt"
-	"runtime"
-	"sync"
 	"time"
 
 	"github.com/go-telegram-bot-api/telegram-bot-api"
@@ -12,22 +10,10 @@ import (
 	"github.com/sundayfun/go-web/tool/filter"
 )
 
-var GlobalTelegramBot *telegramBot
-var GlobalLock = &sync.Mutex{}
-
-func init() {
-	logrus.Infof("the number of cpu: %d", runtime.NumCPU())
-	// runtime.GOMAXPROCS(1000)
-	GlobalTelegramBot = getTelegramBot()
-}
-
 func (s *telegramBot) StartNotification() {
 	logrus.Info("start notification consumer")
-	// go func() {
 	for {
 		temp := <-GlobalTelegramBot.chat
-		// chatID := <-GlobalTelegramBot.chatID
-		// chatMessage := <-GlobalTelegramBot.chatMessage
 		msg := tgbotapi.NewMessage(temp.chatID, temp.chatMessage)
 
 		_, err := s.bot.Send(msg)
@@ -35,11 +21,10 @@ func (s *telegramBot) StartNotification() {
 			logrus.Error(err)
 		}
 	}
-	// }()
 }
 
 func (s *telegramBot) StartSpider(url string, WannerFromHtml func(string) string, updateTimePerMinute int64, chatID int64) {
-	//TODO: same url check use redis
+
 	logrus.Info("start spider consumer")
 	ticker := time.NewTicker(time.Duration(updateTimePerMinute) * time.Minute)
 	go func() {

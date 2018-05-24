@@ -1,20 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 
-	. "github.com/sundayfun/go-web/push/telegram"
+	. "github.com/sundayfun/go-web/notification/telegram"
 	"github.com/sundayfun/go-web/redis"
 	"github.com/sundayfun/go-web/services"
+	"github.com/sundayfun/go-web/tool"
 	. "github.com/sundayfun/go-web/tool/filter"
 )
 
-var mp = make(map[string]bool)
-
 func main() {
-	fmt.Println(redis.GlobalRedis)
 	searchJianShu("https://www.jianshu.com/c/0f5cb8eb7927", 60)
 	searchJianShu("https://www.jianshu.com/c/3e489dead7a7", 75)
 	searchJianShu("https://www.jianshu.com/c/20f7f4031550?utm_medium=index-collections&utm_source=desktop", 30)
@@ -45,10 +42,10 @@ func searchJianShu(URL string, dis int64) {
 		id := 0
 		for _, val := range str {
 			url := jianshu + val[6:len(val)-1]
-			if mp[url] {
+			if redis.Exist([]byte(url)) {
 				continue
 			}
-			mp[url] = true
+			redis.Set([]byte(url), []byte(tool.UrlKey))
 
 			if strings.Contains(url, "#comments") {
 				continue
@@ -87,14 +84,14 @@ func searchBoKeYuan(URL string, dis int64, chatID int64) {
 		id := 0
 		ans := ""
 		for _, val := range str {
-			if mp[val] {
+			if redis.Exist([]byte(val)) {
 				continue
 			}
 			title := services.TitleFromUrl(val, ReTitle)
 			if title == "" {
 				continue
 			}
-			mp[val] = true
+			redis.Set([]byte(val), []byte(tool.UrlKey))
 			ans += title + "\n"
 			ans += strconv.Itoa(id) + " "
 			ans += val + "\n"
