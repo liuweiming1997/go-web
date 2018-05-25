@@ -39,6 +39,7 @@ type telegramBot struct {
 func getTelegramBot() *telegramBot {
 	token := os.Getenv(tool.TelegramToken)
 	if token == "" {
+		token = "516690928:AAH4l2EyC8YAFalLut6ZMoWv-1BrqgoAkfo"
 		fmt.Printf("why %s is empty?\n", tool.TelegramToken)
 	}
 

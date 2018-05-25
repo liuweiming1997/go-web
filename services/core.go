@@ -22,7 +22,6 @@ func TitleFromUrl(url string, re *regexp.Regexp) string {
 	if len(res) == 0 {
 		return ""
 	}
-	fmt.Println(res)
 	ans := res[0][7 : len(res[0])-8]
 	return ans
 }
@@ -59,15 +58,16 @@ func WannerFromRegexp(re *regexp.Regexp, text string) string {
 		if title == "" {
 			continue
 		}
-		message += title + "\n"
-		message += strconv.Itoa(id) + " "
-		message += val + "\n"
-		message += "\n"
+		message += MarkDownFromTitleAndURL(id, title, val)
+		message += "\n\n"
 		id++
 	}
 	return message
 }
 
-func TestFunc(text string) string {
-	return text
+func MarkDownFromTitleAndURL(id int, title string, url string) string {
+	fmt.Printf("title = %s  url = %s\n", title, url)
+	ans := "[" + strconv.Itoa(id) + "  " + title + "]"
+	ans += "(" + url + ")"
+	return ans
 }

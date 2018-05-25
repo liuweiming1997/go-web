@@ -17,7 +17,7 @@ func (s *telegramBot) StartNotification() {
 	for {
 		temp := <-GlobalTelegramBot.chat
 		msg := tgbotapi.NewMessage(temp.chatID, temp.chatMessage)
-
+		msg.ParseMode = "markdown"
 		_, err := s.bot.Send(msg)
 		if err != nil {
 			logrus.Error(err)

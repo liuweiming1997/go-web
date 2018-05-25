@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	. "github.com/sundayfun/go-web/notification/telegram"
@@ -71,10 +70,8 @@ func searchJianShu(URL string, dis int64) {
 				continue
 			}
 
-			ans += title + "\n"
-			ans += strconv.Itoa(id) + " "
-			ans += url + "\n"
-			ans += "\n"
+			ans += services.MarkDownFromTitleAndURL(id, title, url)
+			ans += "\n\n"
 			id++
 		}
 		return ans
@@ -103,10 +100,9 @@ func searchBoKeYuan(URL string, dis int64, chatID int64) {
 				continue
 			}
 			redis.Set([]byte(val), []byte(tool.UrlKey))
-			ans += title + "\n"
-			ans += strconv.Itoa(id) + " "
-			ans += val + "\n"
-			ans += "\n"
+
+			ans += services.MarkDownFromTitleAndURL(id, title, val)
+			ans += "\n\n"
 			id++
 		}
 		return ans
