@@ -28,7 +28,15 @@ services:
       - db
     command: "./tools/deploy.sh dbrestore"
     # running on container
-
+  
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
+    ports:
+      - "127.0.0.1:6379:6379"
+    restart: always
+    
   server:
     build:
       context: ..
@@ -39,6 +47,8 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - VIMI_DB_HOST=${VIMI_DB_HOST}
       - VIMI_DB_SSL_MODE=${VIMI_DB_SSL_MODE}
+      - Telegram_Token=${Telegram_Token}
+      - Redis_Host=${Redis_Host}
     # args:
     #   - http_proxy=${PROXY} # export PROXY=http://zz:xx if need proxy to build
     #   - https_proxy=${PROXY}
@@ -48,8 +58,11 @@ services:
       # - ../logs:$GOPATH/src/github.com/sundayfun/go-web/logs
     depends_on:
       - db
+      - redis
     links:
       - db
+      - redis
     restart: always
 volumes:
   mysql_data_test:
+  redis_data:

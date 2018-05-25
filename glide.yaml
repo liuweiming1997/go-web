@@ -1,8 +1,10 @@
 package: github.com/sundayfun/go-web
 import:
 - package: github.com/go-sql-driver/mysql
+- package: github.com/go-telegram-bot-api/telegram-bot-api
+- package: github.com/gomodule/redigo
+  subpackages:
+  - redis
 - package: github.com/jmoiron/sqlx
 - package: github.com/kelseyhightower/envconfig
 - package: github.com/sirupsen/logrus
-- package: gopkg.in/telegram-bot-api.v4
-- package: github.com/go-telegram-bot-api/telegram-bot-api

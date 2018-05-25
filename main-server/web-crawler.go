@@ -15,11 +15,12 @@ import (
 func main() {
 
 	//TOTEST checkout redis
-	res := redis.Get([]byte("you wanner string"))
-	if res == nil {
-		fmt.Println("redis test : nil")
+	key := "https://www.cnblogs.com/"
+	res := redis.Exist([]byte(key))
+	if res {
+		fmt.Printf("redis_test key = %s : exist\n", key)
 	} else {
-		fmt.Printf("redis test : %s\n", string(res))
+		fmt.Printf("redis_test key = %s : not exist\n", key)
 	}
 
 	searchJianShu("https://www.jianshu.com/c/0f5cb8eb7927", 60)
