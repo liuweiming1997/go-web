@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# not go alone if crash
+set -e
+
 DBUSER=root
 DBHOST=95.163.202.160
 DBNAME=homework
