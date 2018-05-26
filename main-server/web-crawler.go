@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"os/signal"
 	"strings"
+	"syscall"
 
 	. "github.com/sundayfun/go-web/notification/telegram"
 	"github.com/sundayfun/go-web/redis"
@@ -13,6 +16,14 @@ import (
 
 func main() {
 
+	go func() {
+		sigs := make(chan os.Signal, 1)
+		signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+		sig := <-sigs
+		fmt.Println("error -----", sig, "---------")
+		os.Exit(tool.ExitCode)
+	}()
+
 	//TOTEST checkout redis
 	key := "https://www.cnblogs.com/"
 	res := redis.Exist([]byte(key))
@@ -22,11 +33,11 @@ func main() {
 		fmt.Printf("redis_test key = %s : not exist\n", key)
 	}
 
-	searchJianShu("https://www.jianshu.com/c/0f5cb8eb7927", 60)
-	searchJianShu("https://www.jianshu.com/c/3e489dead7a7", 75)
-	searchJianShu("https://www.jianshu.com/c/20f7f4031550?utm_medium=index-collections&utm_source=desktop", 30)
+	// searchJianShu("https://www.jianshu.com/c/0f5cb8eb7927", 60)
+	// searchJianShu("https://www.jianshu.com/c/3e489dead7a7", 75)
+	// searchJianShu("https://www.jianshu.com/c/20f7f4031550?utm_medium=index-collections&utm_source=desktop", 30)
 
-	searchBoKeYuan("https://www.cnblogs.com/", 30, TelegramChatIDGroup)
+	searchBoKeYuan("https://www.cnblogs.com", 30, TelegramChatIDGroup)
 
 	GlobalTelegramBot.StartChat()
 	GlobalTelegramBot.StartNotification()
@@ -49,7 +60,6 @@ func searchJianShu(URL string, dis int64) {
 		jianshu := "https://www.jianshu.com"
 		str := re.FindAllString(text, -1)
 		ans := ""
-		id := 0
 		for _, val := range str {
 			url := jianshu + val[6:len(val)-1]
 			if redis.Exist([]byte(url)) {
@@ -70,9 +80,8 @@ func searchJianShu(URL string, dis int64) {
 				continue
 			}
 
-			ans += services.MarkDownFromTitleAndURL(id, title, url)
+			ans += services.MarkDownFromTitleAndURL(title, url)
 			ans += "\n\n"
-			id++
 		}
 		return ans
 	}
@@ -89,7 +98,6 @@ func searchBoKeYuan(URL string, dis int64, chatID int64) {
 
 	WannerFromHtml := func(html string) string {
 		str := re.FindAllString(html, -1)
-		id := 0
 		ans := ""
 		for _, val := range str {
 			if redis.Exist([]byte(val)) {
@@ -101,9 +109,8 @@ func searchBoKeYuan(URL string, dis int64, chatID int64) {
 			}
 			redis.Set([]byte(val), []byte(tool.UrlKey))
 
-			ans += services.MarkDownFromTitleAndURL(id, title, val)
+			ans += services.MarkDownFromTitleAndURL(title, val)
 			ans += "\n\n"
-			id++
 		}
 		return ans
 	}

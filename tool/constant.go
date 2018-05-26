@@ -7,4 +7,6 @@ var (
 
 	//redis
 	UrlKey = "RedisExistUrlKey"
+
+	ExitCode = -1
 )

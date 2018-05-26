@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"regexp"
-	"strconv"
 
 	"github.com/sirupsen/logrus"
 	"github.com/sundayfun/go-web/redis"
@@ -47,7 +46,6 @@ func HtmlFromUrl(url string) (string, error) {
 func WannerFromRegexp(re *regexp.Regexp, text string) string {
 	message := ""
 	str := re.FindAllString(text, -1)
-	id := 1
 	for _, val := range str {
 		if redis.Exist([]byte(val)) {
 			continue
@@ -58,16 +56,15 @@ func WannerFromRegexp(re *regexp.Regexp, text string) string {
 		if title == "" {
 			continue
 		}
-		message += MarkDownFromTitleAndURL(id, title, val)
+		message += MarkDownFromTitleAndURL(title, val)
 		message += "\n\n"
-		id++
 	}
 	return message
 }
 
-func MarkDownFromTitleAndURL(id int, title string, url string) string {
-	fmt.Printf("title = %s  url = %s\n", title, url)
-	ans := "[" + strconv.Itoa(id) + "  " + title + "]"
+func MarkDownFromTitleAndURL(title string, url string) string {
+	fmt.Printf("title = %s\nurl = %s\n\n", title, url)
+	ans := "[" + title + "]"
 	ans += "(" + url + ")"
 	return ans
 }

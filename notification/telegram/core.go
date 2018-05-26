@@ -12,12 +12,15 @@ import (
 	"github.com/sundayfun/go-web/tool/filter"
 )
 
+var done = make(chan bool, 1)
+
 func (s *telegramBot) StartNotification() {
 	logrus.Info("start notification consumer")
 	for {
 		temp := <-GlobalTelegramBot.chat
 		msg := tgbotapi.NewMessage(temp.chatID, temp.chatMessage)
 		msg.ParseMode = "markdown"
+		msg.DisableWebPagePreview = true
 		_, err := s.bot.Send(msg)
 		if err != nil {
 			logrus.Error(err)
@@ -28,23 +31,43 @@ func (s *telegramBot) StartNotification() {
 func (s *telegramBot) StartSpider(url string, WannerFromHtml func(string) string, updateTimePerMinute int64, chatID int64) {
 
 	logrus.Info("start spider consumer")
-	ticker := time.NewTicker(time.Duration(updateTimePerMinute) * time.Minute)
+	ticker := time.NewTicker(time.Duration(updateTimePerMinute) * time.Second)
 	go func() {
 		for t := range ticker.C {
-			fmt.Println(t.String())
+			fmt.Println("now time = " + t.String())
 			html, err := HtmlFromUrl(url)
 			if err != nil {
-				logrus.Error(err)
+				logrus.Error("doing spider ", err)
 				continue
 			}
-			chatMessage := t.String()[0:19] + "\n"
-			chatMessage += WannerFromHtml(html)
-			if len(chatMessage) == 20 {
-				continue
-			}
+			chatMessage := WannerFromHtml(html)
 			PushMessageToTelegram(chatID, chatMessage)
 		}
 	}()
+	// ok := make(chan bool, 1)
+	// ok <- true
+	// go func() {
+	// 	for t := range ok {
+	// 		fmt.Println("what is it? ", t)
+	// 		html, err := HtmlFromUrl(url)
+	// 		if err != nil {
+	// 			logrus.Error("doing spider ", err)
+	// 			continue
+	// 		}
+	// 		chatMessage := WannerFromHtml(html)
+	// 		PushMessageToTelegram(chatID, chatMessage)
+	// 		select {
+	// 		case <-done:
+	// 			break
+	// 		case <-time.After(time.Minute):
+	// 			logrus.Error("done time out")
+	// 			break
+	// 		}
+
+	// 		time.Sleep(time.Duration(updateTimePerMinute) * time.Minute)
+	// 		ok <- true
+	// 	}
+	// }()
 }
 
 func (s *telegramBot) StartChat() {

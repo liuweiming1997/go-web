@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/gomodule/redigo/redis"
+	"github.com/sirupsen/logrus"
 	"github.com/sundayfun/go-web/tool"
 )
 
@@ -17,6 +18,7 @@ func init() {
 		addr = "127.0.0.1:6379"
 		fmt.Printf("why %s is empty?\n", tool.RedisHost)
 	}
+	logrus.Infof("%s = %s\n", tool.RedisHost, addr)
 	GlobalRedisPool = newPool(addr)
 }
 
