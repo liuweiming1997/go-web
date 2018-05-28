@@ -38,3 +38,20 @@ func TestBase(t *testing.T) {
 		t.Fatal(notMatchErr)
 	}
 }
+
+func TestCleanAll(t *testing.T) {
+	s := &testStruct{"test_name", "test_sex"}
+
+	key := []byte("test_key")
+	value, _ := json.Marshal(s)
+
+	Set(key, value)
+	err := ClearAll()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if Exist(key) {
+		t.Fatal(err)
+	}
+}

@@ -41,3 +41,11 @@ func Delete(key []byte) error {
 	_, err := conn.Do("DEL", key)
 	return err
 }
+
+func ClearAll() error {
+	conn := GlobalRedisPool.Get()
+	defer conn.Close()
+
+	_, err := conn.Do("FLUSHALL")
+	return err
+}

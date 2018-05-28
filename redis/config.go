@@ -18,8 +18,16 @@ func init() {
 		addr = "127.0.0.1:6379"
 		fmt.Printf("why %s is empty?\n", tool.RedisHost)
 	}
-	logrus.Infof("%s = %s\n", tool.RedisHost, addr)
+	logrus.Infof("%s = %s", tool.RedisHost, addr)
 	GlobalRedisPool = newPool(addr)
+
+	go func() {
+		ticker := time.NewTicker(time.Hour * 36)
+		for t := range ticker.C {
+			logrus.Info("time := ", t, "clear all")
+			ClearAll()
+		}
+	}()
 }
 
 func newPool(addr string) *redis.Pool {
