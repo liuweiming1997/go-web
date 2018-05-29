@@ -1,6 +1,8 @@
 package telegram
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestPushMarkDown(t *testing.T) {
 	PushMessageToTelegram(TelegramChatIDGroup, "test")

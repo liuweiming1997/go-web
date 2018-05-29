@@ -21,6 +21,7 @@ func (s *telegramBot) StartNotification() {
 		msg := tgbotapi.NewMessage(temp.chatID, temp.chatMessage)
 		msg.ParseMode = "markdown"
 		msg.DisableWebPagePreview = true
+
 		_, err := s.bot.Send(msg)
 		if err != nil {
 			logrus.Error(err)
