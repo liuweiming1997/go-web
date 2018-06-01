@@ -10,10 +10,10 @@ RUN apk add --no-cache git curl \
 
 COPY . $GOPATH/src/github.com/sundayfun/go-web
 
-WORKDIR $GOPATH/src/github.com/sundayfun/go-web
+# WORKDIR $GOPATH/src/github.com/sundayfun/go-web
 
-RUN glide up
-RUN glide install -v
+# RUN glide up
+# RUN glide install -v
 
 WORKDIR $GOPATH/src/github.com/sundayfun/go-web/main-server
 
