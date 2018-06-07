@@ -13,6 +13,7 @@ import (
 var GlobalTelegramBot *telegramBot
 
 func init() {
+	logrus.Info(os.Getenv("http_proxy"))
 	logrus.Infof("the number of cpu: %d", runtime.NumCPU())
 	// runtime.GOMAXPROCS(1000)
 	GlobalTelegramBot = getTelegramBot()

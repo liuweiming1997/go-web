@@ -36,7 +36,7 @@ services:
     ports:
       - "127.0.0.1:6379:6379"
     restart: always
-    
+
   server:
     build:
       context: ..
@@ -49,6 +49,8 @@ services:
       - VIMI_DB_SSL_MODE=${VIMI_DB_SSL_MODE}
       - Telegram_Token=${Telegram_Token}
       - Redis_Host=${Redis_Host}
+      - http_proxy=${HTTP_PROXY}
+      - https_proxy=${HTTPS_PROXY}
     # args:
     #   - http_proxy=${PROXY} # export PROXY=http://zz:xx if need proxy to build
     #   - https_proxy=${PROXY}
@@ -57,12 +59,20 @@ services:
       - ../logs:/go/src/github.com/sundayfun/go-web/logs
       # - ../logs:$GOPATH/src/github.com/sundayfun/go-web/logs
     depends_on:
-      - db
       - redis
-    links:
+      - sslocal
       - db
-      - redis
     restart: always
+
+  sslocal:
+    image: ahui/sslocal
+    ports:
+    - 127.0.0.1:1080:1080
+    restart: always
+    volumes:
+    - ./sslocal-config.json:/etc/sslocal.json
+    command: "-c /etc/sslocal.json"
+
 volumes:
   mysql_data_test:
   redis_data:

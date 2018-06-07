@@ -7,7 +7,6 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/sirupsen/logrus"
 	. "github.com/sundayfun/go-web/notification/telegram"
 	"github.com/sundayfun/go-web/redis"
 	"github.com/sundayfun/go-web/services"
@@ -16,15 +15,6 @@ import (
 )
 
 func main() {
-
-	conn := redis.GlobalRedisPool.Get()
-	defer conn.Close()
-
-	_, err := conn.Do("FLUSHALL")
-
-	if err != nil {
-		logrus.Error(err)
-	}
 	go func() {
 		sigs := make(chan os.Signal, 1)
 		signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
@@ -44,7 +34,7 @@ func main() {
 	}
 
 	searchBoKeYuan("https://www.cnblogs.com", 300, TelegramChatIDGroup)
-	searchBole("http://blog.jobbole.com/category/humor-comic/", 300, TelegramChatIDGroup)
+	// searchBole("http://blog.jobbole.com/category/humor-comic/", 300, TelegramChatIDGroup)
 	GlobalTelegramBot.StartChat()
 	GlobalTelegramBot.StartNotification()
 	for {
