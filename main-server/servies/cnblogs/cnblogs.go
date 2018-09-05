@@ -2,7 +2,7 @@
 * @Author: vimiliu
 * @Date:   2018-09-05 13:45:48
 * @Last Modified by:   vimiliu
-* @Last Modified time: 2018-09-05 19:56:42
+* @Last Modified time: 2018-09-05 22:50:21
  */
 
 /**
@@ -49,6 +49,7 @@ func Producer() {
 
 			msg := telegram.GetDefaultTelegramMsg()
 			msg.Token = env.GetTelegramToken()
+			msg.ChatId = telegram.TelegramChatIDGroup
 			if msg.Token == "" {
 				msg.Token = "516690928:AAH4l2EyC8YAFalLut6ZMoWv-1BrqgoAkfo"
 			}
@@ -76,7 +77,7 @@ func getWantFromHtml(html string) []string {
 	re := t.GetRegexp()
 	finalResult := []string{}
 	for _, url := range urls {
-		if !re.MatchString(url) {
+		if re.MatchString(url) {
 			finalResult = append(finalResult, url)
 		}
 	}
