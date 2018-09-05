@@ -1,8 +1,8 @@
 {
-  "server": "your server",
+  "server": "95.163.202.160",
   "server_port": 1080,
   "method": "aes-256-cfb",
-  "password": "your password",
+  "password": "stupidonevimi",
   "fast_open": false,
   "local_address": "0.0.0.0",
   "local_port": 1080,

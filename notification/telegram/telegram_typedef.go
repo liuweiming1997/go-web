@@ -1,4 +1,4 @@
-package telegram2
+package telegram
 
 const (
 	telegramUrl    = "https://api.telegram.org/bot"

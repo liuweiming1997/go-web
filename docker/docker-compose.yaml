@@ -60,8 +60,6 @@ services:
       # - ../logs:$GOPATH/src/github.com/sundayfun/go-web/logs
     depends_on:
       - redis
-      - sslocal
-      - db
     restart: always
 
   sslocal:

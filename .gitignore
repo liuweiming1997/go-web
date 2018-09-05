@@ -28,3 +28,8 @@ vendor/
 log.txt
 picture
 haha.html
+
+config.up.sh
+config.down.sh
+
+.tags*

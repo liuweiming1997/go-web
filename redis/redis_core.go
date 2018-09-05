@@ -1,6 +1,8 @@
 package redis
 
 import (
+	"time"
+
 	"github.com/gomodule/redigo/redis"
 )
 
@@ -20,6 +22,11 @@ func Set(key, value []byte) error {
 	defer conn.Close()
 
 	_, err := conn.Do("SET", key, value)
+	if err != nil {
+		return err
+	}
+
+	_, err = conn.Do("EXPIRE", key, time.Hour*12)
 	return err
 }
 
