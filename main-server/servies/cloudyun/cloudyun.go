@@ -1,19 +1,16 @@
 /*
 * @Author: vimiliu
-* @Date:   2018-09-05 13:45:48
+* @Date:   2018-09-06 10:17:43
 * @Last Modified by:   vimiliu
-* @Last Modified time: 2018-09-06 14:03:43
+* @Last Modified time: 2018-09-06 14:00:02
  */
-
-/**
- * 爬取博客园
- */
-package cnblogs
+package cloudyun
 
 import (
 	"strconv"
 	"time"
 
+	"github.com/axgle/mahonia"
 	"github.com/sirupsen/logrus"
 	"github.com/sundayfun/go-web/env"
 	"github.com/sundayfun/go-web/notification/telegram"
@@ -23,13 +20,13 @@ import (
 )
 
 const (
-	indexUrl   = "https://www.cnblogs.com/"
-	updateTime = 300 // s
-	info       = "爬虫--博客园"
+	indexUrl   = "https://blog.codingnow.com/"
+	updateTime = 3000 // s
+	info       = "爬虫--云风的blog"
 )
 
 func Producer() {
-	logrus.Info(info)
+	logrus.Info(info + " --- " + "start")
 	ticker := time.NewTicker(time.Duration(updateTime) * time.Second)
 	for t := range ticker.C {
 		logrus.Info(info + " --- " + t.String())
@@ -38,11 +35,12 @@ func Producer() {
 			logrus.Info(info + " --- " + err.Error())
 			continue
 		}
+
 		urls := getWantFromHtml(html)
+
 		for _, url := range urls {
 			urlHtml, _ := tool.GetHtmlFromUrl(url)
-
-			title := tool.GetTitleFromHtml(urlHtml)
+			title := ConvertToString(tool.GetTitleFromHtml(urlHtml), "gbk", "utf-8")
 
 			msg := telegram.GetDefaultTelegramMsg()
 			msg.Token = env.GetTelegramToken()
@@ -59,30 +57,19 @@ func Producer() {
 	}
 }
 
+func ConvertToString(src string, srcCode string, tagCode string) string {
+	srcCoder := mahonia.NewDecoder(srcCode)
+	srcResult := srcCoder.ConvertString(src)
+	tagCoder := mahonia.NewDecoder(tagCode)
+	_, cdata, _ := tagCoder.Translate([]byte(srcResult), true)
+	result := string(cdata)
+	return result
+}
+
 func getWantFromHtml(html string) []string {
 	// 先找出所有url
 	urls := getAllUrlFromHtml(html)
-
-	// 再按照固定的东西筛选
-	t := &filter.VimiRegexp{
-		BeginWith:   []string{},
-		MustContain: []string{`go`, `cpp`, `linux`, `docker`, `javascript`, `node.js`, `mysql`},
-		EndWith:     []string{},
-	}
-	re := t.GetRegexp()
-	finalResult := []string{}
-	for _, url := range urls {
-		urlHtml, err := tool.GetHtmlFromUrl(url)
-		if err != nil {
-			logrus.Info(info + " --- " + err.Error())
-			continue
-		}
-
-		if re.MatchString(tool.GetTitleFromHtml(urlHtml)) {
-			finalResult = append(finalResult, url)
-		}
-	}
-	return finalResult
+	return urls
 }
 
 func getAllUrlFromHtml(html string) []string {
@@ -94,6 +81,7 @@ func getAllUrlFromHtml(html string) []string {
 	re := t.GetRegexp()
 	finalResult := []string{}
 	urls := re.FindAllString(html, -1)
+
 	for _, url := range urls {
 		hashValue := strconv.FormatUint(tool.String2uint64(url), 10)
 		if !redis.Exist([]byte(hashValue)) {

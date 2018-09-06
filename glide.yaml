@@ -8,3 +8,4 @@ import:
 - package: github.com/jmoiron/sqlx
 - package: github.com/kelseyhightower/envconfig
 - package: github.com/sirupsen/logrus
+- package: github.com/axgle/mahonia
