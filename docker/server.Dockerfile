@@ -23,7 +23,7 @@ RUN glide install -v
 
 WORKDIR $GOPATH/src/github.com/sundayfun/go-web/main-server
 
-RUN go build -o web-crawler web-crawler.go 
+RUN go build -o web-crawler web-crawler.go
 
 ENTRYPOINT ["./web-crawler"]
 

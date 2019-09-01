@@ -2,18 +2,17 @@ package main
 
 import (
 	"runtime"
-  "time"
-	"github.com/sundayfun/go-web/main-server/servies/cloudyun"
+	"time"
+
+	"github.com/sundayfun/go-web/main-server/servies/cnblogs"
 	"github.com/sundayfun/go-web/main-server/servies/niuke"
-	"github.com/sundayfun/go-web/main-server/servies/niukemianjin"
 )
 
 func main() {
 	go cnblogs.Producer()
-	go cloudyun.Producer()
 	go niuke.Producer()
 	for {
-    time.Sleep(time.Second * 30)
+		time.Sleep(time.Second * 30)
 		runtime.Gosched()
 	}
 }
