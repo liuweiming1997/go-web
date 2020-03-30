@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #39.108.100.86
-server_address=95.163.202.231
+server_address=119.23.231.141
 
 function deploy() {
 	#  rsync的desc会自动创建一个目录，所以这样就是/root/go-web
