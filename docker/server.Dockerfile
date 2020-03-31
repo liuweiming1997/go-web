@@ -1,4 +1,4 @@
-FROM golang:1.9.3-alpine3.7
+FROM golang:latest
 
 # test proxy or not
 # RUN go get -u google.golang.org/grpc
@@ -13,6 +13,8 @@ WORKDIR $GOPATH/src/github.com/sundayfun/go-web
 
 COPY ./shell/setup.sh /usr/local/bin
 
-ENTRYPOINT ["setup.sh"]
+RUN touch a.txt
 
+# ENTRYPOINT ["tail", "-f", "a.txt"]
+ENTRYPOINT ["setup.sh"]
 # must use ./main

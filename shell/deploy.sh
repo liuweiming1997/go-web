@@ -1,17 +1,17 @@
 #!/bin/bash
 
 #39.108.100.86
-server_address=119.23.231.141
+server_address=95.169.4.132
 
 function deploy() {
 	#  rsync的desc会自动创建一个目录，所以这样就是/root/go-web
 	echo "maybe a little bit slow because will push this file to your-server"
-	rsync -avz --delete ../go-web weimingliu@${server_address}:/home/weimingliu
+	rsync -e 'ssh -p 26718' -avz --delete ../go-web weimingliu@${server_address}:/home/weimingliu
 	# ssh root@${server_address} "cd go-web/docker; 
  #                                   docker-compose up --build -d db; 
  #                                   docker-compose up --build -d dbrestore; 
  #                                   docker-compose up --build -d server;"
- 	ssh weimingliu@${server_address} "cd go-web/docker;
+ 	ssh -p 26718 weimingliu@${server_address} "cd go-web/docker;
                                    docker-compose up --build -d server;"
 }
 
