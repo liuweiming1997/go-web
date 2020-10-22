@@ -5,11 +5,11 @@ set -e
 # local test here
 function localtest() {
 	echo "local debug begin"
-	./env/config.up.sh
+	./env/config_up.sh
 	cd ./main-server
 	go run ./web-crawler.go
 	cd ..
-	./env/config.down.sh
+	./env/config_down.sh
 }
 
 case "$1" in
