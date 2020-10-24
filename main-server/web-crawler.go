@@ -12,6 +12,7 @@ func main() {
 	go cnblogs.Producer()
 	go cloudyun.Producer()
 	go niuke.Producer()
+  go niukemianjin.Producer()
 	for {
 		time.Sleep(time.Second * 30)
 		runtime.Gosched()
