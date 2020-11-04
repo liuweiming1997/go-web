@@ -15,7 +15,7 @@ import (
 
 const (
 	indexUrl   = "https://dzone.com/"
-	updateTime = 300 // s
+	updateTime = 5 // s
 	info       = "爬虫--dzone"
 )
 

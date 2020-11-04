@@ -14,17 +14,24 @@ import (
  */
 
 func GetHtmlFromUrl(url string) (string, error) {
-	resp, err := http.Get(url)
+	client := &http.Client{}
+	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return "", err
 	}
-	defer resp.Body.Close()
+	request.Header.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36")
 
-	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("statusCode wanner 200 but have %d", resp.StatusCode)
+	response, err := client.Do(request)
+	if err != nil {
+		return "", err
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode != 200 {
+		return "", fmt.Errorf("statusCode wanner 200 but have %d", response.StatusCode)
 	}
 
-	data, err := ioutil.ReadAll(resp.Body)
+	data, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		return "", err
 	}
