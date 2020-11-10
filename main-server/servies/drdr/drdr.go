@@ -15,7 +15,7 @@ import (
 
 const (
 	indexUrl   = "https://drmingdrmer.github.io/"
-	updateTime = 5 // s
+	updateTime = 300 // s
 	info       = "爬虫--drdr"
 )
 
@@ -34,7 +34,7 @@ func Producer() {
 
 		for _, url := range urls {
 			urlHtml, _ := tool.GetHtmlFromUrl(url)
-			title := ConvertToString(tool.GetTitleFromHtml(urlHtml), "gbk", "utf-8")
+			title := ConvertToString(tool.GetTitleFromHtml(urlHtml), "utf-8", "utf-8")
 
 			msg := telegram.GetDefaultTelegramMsg()
 			msg.Token = env.GetTelegramToken()
@@ -63,13 +63,17 @@ func ConvertToString(src string, srcCode string, tagCode string) string {
 func getWantFromHtml(html string) []string {
 	// 先找出所有url
 	urls := getAllUrlFromHtml(html)
-	finalResult := urls
+	finalResult := make([]string, len(urls))
+	for idx:= 0; idx < len(urls); idx++ {
+		finalResult[idx] = indexUrl + urls[idx][6:]
+	}
 	return finalResult
+	// return finalResult
 }
 
 func getAllUrlFromHtml(html string) []string {
 	t := &filter.VimiRegexp{
-		BeginWith:   []string{`http://`, `https://`},
+		BeginWith:   []string{`href`},
 		MustContain: []string{},
 		EndWith:     []string{`.html`},
 	}
