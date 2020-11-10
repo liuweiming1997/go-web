@@ -1,4 +1,4 @@
-package tonybai
+package drdr
 
 import (
 	"strconv"
@@ -14,9 +14,9 @@ import (
 )
 
 const (
-	indexUrl   = "https://tonybai.com/articles/"
+	indexUrl   = "https://drmingdrmer.github.io/"
 	updateTime = 5 // s
-	info       = "爬虫--tonybai"
+	info       = "爬虫--drdr"
 )
 
 func Producer() {
@@ -63,27 +63,7 @@ func ConvertToString(src string, srcCode string, tagCode string) string {
 func getWantFromHtml(html string) []string {
 	// 先找出所有url
 	urls := getAllUrlFromHtml(html)
-	
-	logrus.Info(urls)
-	// 再按照固定的东西筛选
-	t := &filter.VimiRegexp{
-		BeginWith:   []string{},
-		MustContain: []string{`go`, `cpp`, `linux`, `docker`, `javascript`, `java`, `python`},
-		EndWith:     []string{},
-	}
-	re := t.GetRegexp()
-	finalResult := []string{}
-	for _, url := range urls {
-		urlHtml, err := tool.GetHtmlFromUrl(url)
-		if err != nil {
-			logrus.Info(info + " --- " + err.Error())
-			continue
-		}
-
-		if re.MatchString(tool.GetTitleFromHtml(urlHtml)) {
-			finalResult = append(finalResult, url)
-		}
-	}
+	finalResult := urls
 	return finalResult
 }
 
