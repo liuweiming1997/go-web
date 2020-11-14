@@ -8,6 +8,7 @@ import (
 	"github.com/sundayfun/go-web/main-server/servies/drdr"
 	"github.com/sundayfun/go-web/main-server/servies/niuke"
 	"github.com/sundayfun/go-web/main-server/servies/niukemianjin"
+	"github.com/sundayfun/go-web/main-server/servies/draveness"
 )
 
 func main() {
@@ -16,6 +17,8 @@ func main() {
 	go niuke.Producer()
   go niukemianjin.Producer()
   go drdr.Producer()
+  go draveness.Producer()
+
 	for {
 		time.Sleep(time.Second * 30)
 		runtime.Gosched()
