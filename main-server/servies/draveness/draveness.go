@@ -15,7 +15,7 @@ import (
 
 const (
 	indexUrl   = "https://draveness.me/"
-	updateTime = 5 // s
+	updateTime = 300 // s
 	info       = "爬虫--draveness"
 )
 
