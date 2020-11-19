@@ -66,7 +66,7 @@ func getWantFromHtml(html string) []string {
 	// 再按照固定的东西筛选
 	t := &filter.VimiRegexp{
 		BeginWith:   []string{},
-		MustContain: []string{`go`, `python3`, `jenkins`, `单元测试`, `unittest`, `测试`, `bazel`, `mysql`},
+		MustContain: []string{`go`, `python3`, `jenkins`, `单元测试`, `unittest`, `测试`, `bazel`, `nat`, `tcp`, `网络`, `udp`, `协程`, `路由`},
 		EndWith:     []string{},
 	}
 	re := t.GetRegexp()
