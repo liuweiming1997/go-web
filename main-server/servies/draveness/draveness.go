@@ -15,7 +15,7 @@ import (
 
 const (
 	indexUrl   = "https://draveness.me/"
-	updateTime = 300 // s
+	updateTime = 30 // s
 	info       = "爬虫--draveness"
 )
 
@@ -31,6 +31,7 @@ func Producer() {
 		}
 
 		urls := getWantFromHtml(html)
+		logrus.Info(urls)
 
 		for _, url := range urls {
 			urlHtml, _ := tool.GetHtmlFromUrl(url)

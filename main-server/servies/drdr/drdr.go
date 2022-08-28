@@ -15,7 +15,7 @@ import (
 
 const (
 	indexUrl   = "https://drmingdrmer.github.io/"
-	updateTime = 300 // s
+	updateTime = 30 // s
 	info       = "爬虫--drdr"
 )
 

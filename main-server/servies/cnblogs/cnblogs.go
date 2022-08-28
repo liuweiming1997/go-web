@@ -24,7 +24,7 @@ import (
 
 const (
 	indexUrl   = "https://www.cnblogs.com/"
-	updateTime = 300 // s
+	updateTime = 3 // s
 	info       = "爬虫--博客园"
 )
 

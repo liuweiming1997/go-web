@@ -9,8 +9,9 @@ package cnblogs
 
 import (
 	"testing"
+	"github.com/sundayfun/go-web/main-server/servies/cnblogs"
 )
 
 func TestA(t *testing.T) {
-	Producer()
+	cnblogs.Producer()
 }

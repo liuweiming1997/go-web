@@ -43,7 +43,7 @@ func newPool(addr string) *redis.Pool {
 		TestOnBorrow: func(c redis.Conn, t time.Time) error {
 			//TODO: find how to use it
 			if time.Since(t) > 20*time.Second {
-				fmt.Println("do this")
+				logrus.Warn("do redis ping")
 				_, err := c.Do("PING")
 				return err
 			}
